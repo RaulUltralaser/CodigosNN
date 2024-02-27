@@ -6,17 +6,17 @@ close all
 f=19;        %que nodo quiero leer en la simulación
 
 % Valores de la viga
-ne=20;      %Numero elementos
-nne=2;      %Nodos por elemento
-dof=1;      %Grados de libertad
-L=1;        %Largo %m
-Le=L/ne;    %Distancia entre elementos
-E=69e3;     %Modulo de Young N/m2 
-d=2e-3;     %Espesor m
-b=25e-3;    %Ancho m
-rho=2710;   %Densidad Kg/m3
-nodosFix=1; %Especificación de la cantidad de los nodos fijos
-imass=1;    %1 Si la masa es consistente, 2 si es grumosa
+ne=20;              %Numero elementos
+nne=2;              %Nodos por elemento
+dof=1;              %Grados de libertad
+L=1;                %Largo %m
+Le=L/ne;            %Distancia entre elementos
+E=69e3;             %Modulo de Young N/m2 
+d=2e-3;             %Espesor m
+b=25e-3;            %Ancho m
+rho=2710;           %Densidad Kg/m3
+nodosFix=1;         %Especificación de la cantidad de los nodos fijos
+imass=1;            %1 Si la masa es consistente, 2 si es grumosa
 Rm=1e-3;            %Constantes de Rayleigh para la matriz de amortiguamiento
 Rk=1e-4;            %Constantes de Rayleigh para la matriz de amortiguamiento
 
@@ -48,14 +48,14 @@ end
 
 
 %simply supported beam
-bc=1;                      %Boundary condition (supongo es solo el primer nodo)
-nbc=length(bc);            
-bcval=zeros(1,dof*nbc);
-ibc=feeldof(bc,nbc,dof);
+bc=1;                      %Boundary condition (En este caso solo el primer nodo)
+nbc=length(bc);            %Cancidad de nodos restringidos
+bcval=zeros(1,dof*nbc);    %Valores de los nodos restringidos 
+ibc=feeldof(bc,nbc,dof);   %Calcula los dofs asociados a cada elemento
 
 
-qi=2:nn;    %controled nodes 
-qo=2:nn;    %measurable nodes  
+qi=2:nn;    %Nodos controlados 
+qo=2:nn;    %Nodos medibles  
 
 m=length(qi); %Se usa para la matriz B
 p=length(qo); %Se usa para la matriz H
@@ -65,10 +65,10 @@ iqo=feeldof(qo,p,dof);  %Cálcula el dof del sistema asociado con cada elemento
 
 FF=zeros(N,m);%Inicializa la matriz de fuerzas
 
-%Rellena la matriz de fuerzas con una diagonal de 1 bajo la diagonal
 %principal
-fi=[1,0]';  %displacement force
-%fi=[0,1]'; %angular force
+fi=[1,0]';  %FUerza de desplazamiento
+
+%Rellena la matriz de fuerzas con una diagonal de 1 bajo la diagonal
 i=1;
 for j=1:m-1
     FF(iqi(i:i+1),j)=fi;
