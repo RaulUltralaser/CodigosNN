@@ -56,8 +56,7 @@ end
 %% Algoritmo 1
 % ---------------------------------------------------------------
 
-% graph1 = zeros(ne,ne);
-% graph2 = zeros(ne,ne);
+
 
 % figure(1)
 % tic
@@ -80,14 +79,13 @@ for i = 1:N-2
 	V1 = V1 + 1/6*k1V + 1/3*k2V + 1/3*k3V + 1/6*k4V;
 	W1 = W1 + 1/6*k1W + 1/3*k2W + 1/3*k3W + 1/6*k4W;
 
-    subplot(1, 2, 1); 
-    plot(u(:, 20)); % Grafica la columna seleccionada
-    
-    title(['Iteración: ' num2str(i)]);
-    xlabel('Fila');
-    ylabel(['Valor de u en la columna ' 20]);
-    grid on;
-    drawnow; % Actualiza la figura en cada iteración
+    % Real model
+	measured_u(:,i) = reshape(us,[],1);
+	% Neural Network model
+    approx_u(:,i)   = reshape(u,[],1);
+% 
+%     new_u = reshape(measured_u(:,i),ne,ne,ne);
+%     aprox = reshape(approx_u(:,i),ne,ne,ne);
 end
 % toc
 

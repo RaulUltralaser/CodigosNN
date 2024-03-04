@@ -1,4 +1,4 @@
-%clear Kc Mc Dc mu mu2 betap betav
+
 clc
 clearvars
 close all
@@ -172,38 +172,7 @@ Q=Q0+Dsigma+Dphi*ubar;
 
 
 
-% %% DNN
-% %----------------------------------------------
-% % Parameters initialization for DNN
-% % %----------------------------------------------
-% % global V1 W1 sigmoid K1 K2 P V0 l Lambda A 
-% % Agregue NN A TODAS LAS VARIABLES PARA EVITAR CONFUSIONES DE ESTA PARTE Y
-% % LA ANTERIOR
-% nnode=80;                              %Está relacionado a FF
-% V1NN = 2*rand(nnode,nnode)-1;			      % weigth matrix
-% W1NN = 2*rand(nnode,nnode)-1;			      % weigth matrix
-% % us = MeasureData(0);                % "real" measurement
-% % u  = us;                            % first state of the system
-% %
-% KmaskNN 			= [zeros(nq,nq),eye(nq);
-%                         Kbc  ,Dbc]; ;
-% % Kmask(Kmask~=0) = 1;
-% V1NN		        = V1NN.*KmaskNN;
-% W1NN                = W1NN.*KmaskNN;
-% V0NN                = V1NN;
-% W0NN                = W1NN;                     %%YO AGREGUE ESTO PARA INICIALIZAR EN SIMULINK
-% %
-% % sigmoid = @(b,x)( 1./(1+exp(-b*x)));
-% hNN       =0.01;%sample time   cambie el nombre originalmente (h)
-% K1NN	  = 2.2802;
-% K2NN	  = 2.7468;
-% INN       = eye(nnode);
-% lNN 	  = 1.1620;
-% PNN       = INN;%SPDmatrix(nnode);
-% LambdaNN  = SPDmatrix(nnode);
-% aaNN      = -25;%-51.1440;
-% ANN       = aaNN*eye(nnode);   
-% 
+
 % 
 % function A = SPDmatrix(size)
 %     % Generate a random symmetric matrix
