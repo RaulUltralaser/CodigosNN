@@ -55,9 +55,7 @@ end
 % ---------------------------------------------------------------
 %% Algoritmo 1
 % ---------------------------------------------------------------
-
-% graph1 = zeros(ne,ne);
-% graph2 = zeros(ne,ne);
+columna_graficar = 20;
 
 % figure(1)
 % tic
@@ -80,16 +78,19 @@ for i = 1:N-2
 	V1 = V1 + 1/6*k1V + 1/3*k2V + 1/3*k3V + 1/6*k4V;
 	W1 = W1 + 1/6*k1W + 1/3*k2W + 1/3*k3W + 1/6*k4W;
 
-    subplot(1, 2, 1); 
-    plot(u(:, 20)); % Grafica la columna seleccionada
+    error = u - MesuredData(:,:,i);
     
-    title(['Iteración: ' num2str(i)]);
-    xlabel('Fila');
-    ylabel(['Valor de u en la columna ' 20]);
-    grid on;
-    drawnow; % Actualiza la figura en cada iteración
+   
+    errores(i) = mean(abs(error(:)));
+    
 end
-% toc
+
+figure;
+plot(1:2999, errores, '-o');
+title('Error en cada iteración');
+xlabel('Número de iteración');
+ylabel('Error promedio');
+grid on;
 
 % ---------------------------------------------------------------
 %% Definición de las funciones que se usan en este programa 
