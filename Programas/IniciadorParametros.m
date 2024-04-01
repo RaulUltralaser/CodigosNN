@@ -1,9 +1,8 @@
-
 clc
 clearvars
 close all
 
-f=19;        %que nodo quiero leer en la simulación
+ f=19;        %que nodo quiero leer en la simulación
 
 % Valores de la viga
 ne=20;              %Numero elementos
@@ -11,7 +10,7 @@ nne=2;              %Nodos por elemento
 dof=1;              %Grados de libertad
 L=1;                %Largo %m
 Le=L/ne;            %Distancia entre elementos
-E=69e9;             %Modulo de Young N/m2 
+E=69e3;             %Modulo de Young N/m2 
 d=2e-3;             %Espesor m
 b=25e-3;            %Ancho m
 rho=2710;           %Densidad Kg/m3

@@ -6,10 +6,6 @@ clearvars -except Kbc ne
 close all
 global V1 W1 K1 K2 P V0 l Lambda A 
 
-%Carga los datos medidos previamente
-load('MeasuredData.mat');
-MesuredData = out.Estados(1:20,:,:);
-
 % -----------------------------------------------------
 %% Datos de la simulación
 % ----------------------------------------------------
@@ -21,9 +17,11 @@ N  = length(tk);						% number of iterations
 % -------------------------------------------------------
 %% Iniciador de parametros para la FEDNN
 % ------------------------------------------------------
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat');
+MesuredData=Data;
 V1 = 2*rand(ne,ne)-1;			% Matriz de pesos
 W1 = 2*rand(ne,ne)-1;			% Matriz de pesos
-us = MesuredData(:,:,1);        %Primer estado del sistema real
+us = MesuredData(1:20,1);        %Primer estado del sistema real
 u  = us;                        %Primer estado del sistema approx
 
 Kmask 	= Kbc;
@@ -32,8 +30,8 @@ W1      = W1.*Kmask;
 V0      = V1;
 %
 I       = eye(ne);
-K1		= 2.2802;
-K2		= 2.7468;
+K1		= 1.5;
+K2		= 1;
 l 		= 1.1620;
 P       = I;
 Lambda	= SPDmatrix(ne);
@@ -55,7 +53,7 @@ end
 % ---------------------------------------------------------------
 %% Algoritmo 1
 % ---------------------------------------------------------------
-columna_graficar = 20;
+% columna_graficar = 20;
 
 % figure(1)
 % tic
@@ -65,12 +63,12 @@ for i = 1:N-2
     
     [k1u, k1W, k1V] = DNN(u,us,W1,V1,h);
 
-    us = MesuredData(:,:,i+1);
+    us = MesuredData(1:20,i+1);
 
     [k2u, k2W, k2V] = DNN(u+.5*k1u,us,W1+.5*k1W,V1+.5*k1V,h);
 	[k3u, k3W, k3V] = DNN(u+.5*k2u,us,W1+.5*k2W,V1+.5*k2V,h);
 
-    us = MesuredData(:,:,i+2);
+    us = MesuredData(1:20,i+2);
 	%
 	[k4u, k4W, k4V] = DNN(u+k3u,us,W1+k3W,V1+k3V,h);
 	%
@@ -78,7 +76,7 @@ for i = 1:N-2
 	V1 = V1 + 1/6*k1V + 1/3*k2V + 1/3*k3V + 1/6*k4V;
 	W1 = W1 + 1/6*k1W + 1/3*k2W + 1/3*k3W + 1/6*k4W;
 
-    error = u - MesuredData(:,:,i);
+    error = u - MesuredData(1:20,i);
     
    
     errores(i) = mean(abs(error(:)));

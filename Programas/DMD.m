@@ -2,9 +2,9 @@ clc
 close all 
 clearvars
 % Cargar datos desde el archivo .mat
-%load('tus_datos.mat');  
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat');  
 
-X = datos;
+X = Data;
 
 % Definir matrices X1 y X2 para la construcción de matrices de datos consecutivas
 X1 = X(:, 1:end-1);
