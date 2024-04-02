@@ -1,0 +1,35 @@
+%%%%%%%%%%%% Codigo para la FEDNN con datos reales%%%%%%%%%%%%%%%%%%
+%%% NOTA: Correr primero iniciador parametros
+clc
+clearvars -except P k1 k2 A
+close all
+
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat'); 
+
+x = Data;    %valores reales (medidos con el MoCap
+xt = x(:,1); %valor inicial de valores aproximados
+
+u = zeros(40,1);
+% ---------------------------------------------------------------
+%% Algoritmo 
+% ---------------------------------------------------------------
+for i= 1:6
+
+    Delta = xt-x(:,i);
+
+    dW1=-k1*P*Delta*sigmoid(1,xt)';
+    dW2=-k2*P*Delta*sigmoid(1,xt)'*u;
+    
+    W1= cumtrapz(dW1);
+    W2= cumtrapz(dW2);
+
+    dxt = A*xt+W1*sigmoid(1,xt)+W2*sigmoid(1,xt)'*u;
+
+    xt = cumtrapz(dxt);
+    
+
+end
+
+function s = sigmoid(b,x)
+   s = 1./(1+exp(-b*x)); 
+end
