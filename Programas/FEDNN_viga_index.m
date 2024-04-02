@@ -93,6 +93,8 @@ for i = 1:N-1
 end
 
 
+%% PLOTEOS
+
 fila_a_comparar = 1; %Es muy dificil ver todo al mismo tiempo así que aquí 
                      %puedo decidir cual nodo se va a comparar
 
