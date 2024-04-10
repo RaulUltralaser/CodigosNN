@@ -171,8 +171,9 @@ Q=Q0+Dsigma+Dphi*ubar;
 %% DNN SIMULACION REALES
 
 % load('~/Documentos/CodigosNN/Datos/DataAcomodada24.mat'); 
-% x = Data;    %valores reales (medidos con el MoCap)
-% xt = x(:,1); %valor inicial de valores aproximados
+% X = Data;                   %Valores medidos
+% Xmov=X(1:20,:)-X(1:20,1);   %Llevo los valores iniciales a cero
+% X = [Xmov;X(20+1:end,:)];   %Formo X con la correción del offset
 
 
 

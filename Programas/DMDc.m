@@ -33,30 +33,75 @@ Sr = S(1:p, 1:p);
 Vr = V(:, 1:p);
 
 A_tilde=(X2-B*Y)*Vr*(Sr\Ur');
+
+xk=zeros(40,1);
+
+for i=1:6084-1
+    xkk=A_tilde*xk+B*Y(:,i);
+
+    xk=xkk;
+    xtotal(:,i)=xk;
+   
+end
+
+t=linspace(0,6083,6083);
+subplot(2, 1, 1);
+plot(t, xtotal);
+title('Sistema supuesto por DMD');
+xlabel('Frame');
+ylabel('Posiciones y velocidades');
+grid on;
+subplot(2, 1, 2);
+plot(t, X(:,1:end-1));
+title('Sistema real');
+xlabel('Frame');
+ylabel('Posiciones y velocidades');
+grid on;
 %% Caso 2 B es desconocida
 
-% % Aplicar la SVD (Singular Value Decomposition) a Omega
+% Aplicar la SVD (Singular Value Decomposition) a Omega
 % [U, S, V] = svd(Omega, 'econ');
 % 
-% % Elegir el rango de aproximación del rango S
+% Elegir el rango de aproximación del rango S
 % p =  rank(Omega);  %rango de aproximación
 % 
 % 
-% % Construir matrices truncadas y desplazadas
+% Construir matrices truncadas y desplazadas
 % Ur = U(:, 1:p);
 % Sr = S(1:p, 1:p);
 % Vr = V(:, 1:p);
 % 
-% %%TODO: DEFINIR LO QUE ES N Y P
+% %TODO: DEFINIR LO QUE ES N Y P
 % G= X2*Vr*(Sr\Ur');
 % 
-% %Separar Ur1 y Ur2
+% Separar Ur1 y Ur2
 % Ur1=Ur(1:p-1,:);
 % Ur2=Ur(p:end,:);
 % 
-% %Encontrar A y B
+% Encontrar A y B
 % A_tilde = X2*Vr*(Sr\Ur1');
 % B_tilde = X2*Vr*(Sr\Ur2');
-
-
-
+% 
+% xk=zeros(40,1);
+% for i=1:6084-1
+%     xkk=A_tilde*xk+B_tilde*Y(:,i);
+% 
+%     xk=xkk;
+%     xtotal(:,i)=xk;
+%     
+%     
+% end
+% 
+% t=linspace(0,6083,6083);
+% subplot(2, 1, 1);
+% plot(t, xtotal);
+% title('Sistema supuesto por DMD');
+% xlabel('Frame');
+% ylabel('Posiciones y velocidades');
+% grid on;
+% subplot(2, 1, 2);
+% plot(t, X(:,1:end-1));
+% title('Sistema real');
+% xlabel('Frame');
+% ylabel('Posiciones y velocidades');
+% grid on;
