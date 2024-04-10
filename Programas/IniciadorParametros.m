@@ -128,8 +128,8 @@ iPhi=inv(Phi);
 % ---------------------------------------------
 
 
-k1  = 2.2802;
-k2	= 2.7468;
+k1  = 2;
+k2	= 3;
 
 n = ne*2;    %estos van a  ser los estados de mi sistema (vector modal, posiciones y velocidades)
 
@@ -144,7 +144,7 @@ lambda1=eye(n);
 wstar2=diag(1:n);
 lambda2=eye(n);
 
-alpha=3; %Factor escalar de wbar
+alpha=5; %Factor escalar de wbar
 
 Wbar1=alpha*(wstar1*inv(lambda1)*wstar1');
 Wbar2=alpha*(wstar2*inv(lambda2)*wstar2');
@@ -154,7 +154,7 @@ Wbar2=alpha*(wstar2*inv(lambda2)*wstar2');
 R=Wbar1+Wbar2;
 
 %Valores para Q
-ubar=4; %tiene que ser mayor a la norma cuadrada de la entrada 
+ubar=20; %tiene que ser mayor a la norma cuadrada de la entrada 
 Dsigma=2;
 Dphi=2;
 beta=1/6; %Factor escalar de Q0
@@ -168,7 +168,11 @@ Q=Q0+Dsigma+Dphi*ubar;
 [P,~,~] = icare(A,[],Q,[],[],[],-R);
 
 
+%% DNN SIMULACION REALES
 
+load('~/Documentos/CodigosNN/Datos/DataAcomodada24.mat'); 
+x = Data;    %valores reales (medidos con el MoCap)
+xt = x(:,1); %valor inicial de valores aproximados
 
 
 
