@@ -170,9 +170,9 @@ Q=Q0+Dsigma+Dphi*ubar;
 
 %% DNN SIMULACION REALES
 
-load('~/Documentos/CodigosNN/Datos/DataAcomodada24.mat'); 
-x = Data;    %valores reales (medidos con el MoCap)
-xt = x(:,1); %valor inicial de valores aproximados
+% load('~/Documentos/CodigosNN/Datos/DataAcomodada24.mat'); 
+% x = Data;    %valores reales (medidos con el MoCap)
+% xt = x(:,1); %valor inicial de valores aproximados
 
 
 
