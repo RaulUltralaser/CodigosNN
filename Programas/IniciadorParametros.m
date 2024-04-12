@@ -128,14 +128,14 @@ iPhi=inv(Phi);
 % ---------------------------------------------
 
 
-k1  = 2.5;
-k2	= 2.7;
+k1  = 0.7;
+k2	= 2;
 
 n = ne*2;    %estos van a  ser los estados de mi sistema (vector modal, posiciones y velocidades)
 
 %Inicializador de Pesos
 W1_0=rand(n,n);
-W2_0=rand(n,n);
+W2_0=rand(n,n/2);
 % W1_0=out.Pesos1(:,:,6001);
 % W2_0=out.Pesos2(:,:,6001);
 
@@ -146,7 +146,7 @@ lambda1=eye(n);
 wstar2=diag(1:n);
 lambda2=eye(n);
 
-alpha=80; %Factor escalar de wbar
+alpha=60; %Factor escalar de wbar
 
 Wbar1=alpha*(wstar1*inv(lambda1)*wstar1');
 Wbar2=alpha*(wstar2*inv(lambda2)*wstar2');
@@ -156,9 +156,9 @@ Wbar2=alpha*(wstar2*inv(lambda2)*wstar2');
 R=Wbar1+Wbar2;
 
 %Valores para Q
-ubar=50; %tiene que ser mayor a la norma cuadrada de la entrada 
-Dsigma=2;
-Dphi=2;
+ubar=30; %tiene que ser mayor a la norma cuadrada de la entrada 
+Dsigma=4;
+Dphi=4;
 beta=1/8; %Factor escalar de Q0
 
 Q0=beta*eye(n);
@@ -172,7 +172,8 @@ Q=Q0+Dsigma+Dphi*ubar;
 
 %% DNN SIMULACION REALES
 
-load('~/Documentos/CodigosNN/Datos/DataAcomodada24.mat'); 
+% load('~/Documentos/CodigosNN/Datos/DataAcomodada24.mat'); 
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat')
 X = Data;                   %Valores medidos
 Xmov=X(1:20,:)-X(1:20,1);   %Llevo los valores iniciales a cero
 X = [Xmov;X(20+1:end,:)];   %Formo X con la correción del offset
