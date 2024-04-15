@@ -129,7 +129,7 @@ iPhi=inv(Phi);
 
 
 k1  = 0.7;
-k2	= 2;
+k2	= 1.5;
 
 n = ne*2;    %estos van a  ser los estados de mi sistema (vector modal, posiciones y velocidades)
 
@@ -146,7 +146,7 @@ lambda1=eye(n);
 wstar2=diag(1:n);
 lambda2=eye(n);
 
-alpha=60; %Factor escalar de wbar
+alpha=50; %Factor escalar de wbar
 
 Wbar1=alpha*(wstar1*inv(lambda1)*wstar1');
 Wbar2=alpha*(wstar2*inv(lambda2)*wstar2');
@@ -157,9 +157,9 @@ R=Wbar1+Wbar2;
 
 %Valores para Q
 ubar=30; %tiene que ser mayor a la norma cuadrada de la entrada 
-Dsigma=4;
-Dphi=4;
-beta=1/8; %Factor escalar de Q0
+Dsigma=2;
+Dphi=2;
+beta=1/4; %factor escalar Q0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
 Q0=beta*eye(n);
 
