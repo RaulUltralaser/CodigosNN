@@ -129,7 +129,7 @@ iPhi=inv(Phi);
 
 
 k1  = 0.7;
-k2	= 1.5;
+k2	= 0.15;
 
 n = ne*2;    %estos van a  ser los estados de mi sistema (vector modal, posiciones y velocidades)
 
@@ -167,9 +167,10 @@ Q0=beta*eye(n);
 Q=Q0+Dsigma+Dphi*ubar;
 
 
-[P,~,~] = icare(A,[],Q,[],[],[],-R);
+% [P,~,~] = icare(A,[],Q,[],[],[],-R);
+P=0.01*eye(n,n);
 
-
+impulse=10; %El valor de el impulso
 %% DNN SIMULACION REALES
 
 % load('~/Documentos/CodigosNN/Datos/DataAcomodada24.mat'); 
