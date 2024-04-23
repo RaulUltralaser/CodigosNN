@@ -44,7 +44,20 @@ for i=1:6084-1
    
 end
 
+for i=1:6084-1
+    error=xtotal(i)-X(i);
+    errores(i) = mean(abs(error(:)));
+end
 t=linspace(0,6083,6083);
+
+figure
+plot(t, errores(1,:), '-');
+title('Error en cada iteración');
+xlabel('Número de iteración');
+ylabel('Error promedio');
+grid on;
+
+figure
 subplot(2, 1, 1);
 plot(t, xtotal);
 title('Sistema supuesto por DMD');
