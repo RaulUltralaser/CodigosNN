@@ -43,13 +43,13 @@ for i=1:6084-1
     xtotal(:,i)=xk;
    
 end
-
+xtotal(30,1350)=200;
 for i=1:6084-1
     error=xtotal(:,i)-X(:,i);
     errores(i) = mean(abs(error(:)));
 end
 t=linspace(0,6083,6083);
-
+fila=30;
 figure
 plot(t, errores(1,:), '-');
 title('Error en cada iteración');
