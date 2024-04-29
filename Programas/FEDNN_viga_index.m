@@ -10,7 +10,7 @@ global V1 W1 K1 K2 P V0 l Lambda A
 %% Datos de la simulación
 % ----------------------------------------------------
 %Cargo los datos acomodados de los experimentos
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat'); 
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat');
 h  = 0.01;							    % sample time
 N  = size(Data,2);						% number of iterations
 
@@ -19,10 +19,10 @@ N  = size(Data,2);						% number of iterations
 % ------------------------------------------------------
 
 
-MesuredData=Data;
-V1 = 2*rand(ne,ne)-1;			% Matriz de pesos
-W1 = 2*rand(ne,ne)-1;			% Matriz de pesos
-us = MesuredData(1:20,1);       %Primer estado del sistema real
+MesuredData=Data(21:40,:);
+V1 = ones(ne,ne)-1;			% Matriz de pesos
+W1 = ones(ne,ne)-1;			% Matriz de pesos
+us = MesuredData(:,1);       %Primer estado del sistema real
 u  = us;                        %Primer estado del sistema approx
 
 load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/Lambda.mat'); %Aquí cargo solo lambda
@@ -32,12 +32,13 @@ W1      = W1.*Kmask;
 V0      = V1;
 %
 I       = eye(ne);
-K1		= 1.5;
-K2		= 1;
-l 		= 1.1620;
-P       = I;
+K1		= 1e-5;
+K2		= 1e-6;
+l 		= 16.50;
+P       = 100000000*I;
 % Lambda	= SPDmatrix(ne);
-aa      = -25;%-51.1440;
+aa = -.00025;
+%aa      = -25;%-51.1440;
 A       = aa*eye(ne);
 %
 Q0  = I;%SPDmatrix(nnode);
@@ -81,14 +82,16 @@ for i = 1:N-1
 	[k4u, k4W, k4V] = DNN(u+k3u,us,W1+k3W,V1+k3V,h);
 	%
 	u  =  u + 1/6*k1u + 1/3*k2u + 1/3*k3u + 1/6*k4u;
-	V1 = V1 + 1/6*k1V + 1/3*k2V + 1/3*k3V + 1/6*k4V;
-	W1 = W1 + 1/6*k1W + 1/3*k2W + 1/3*k3W + 1/6*k4W;
+	V1 = 0.01*V1 + 1/6*k1V + 1/3*k2V + 1/3*k3V + 1/6*k4V;
+	W1 = 0.01*W1 + 1/6*k1W + 1/3*k2W + 1/3*k3W + 1/6*k4W;
 
     error = u - MesuredData(1:20,i);
    
     errores(i) = mean(abs(error(:)));
 
     utotal(:,i) = u;
+
+    W1total(:,i)= W1(:,4);
     
 end
 
@@ -102,7 +105,7 @@ fila_a_comparar = 1; %Es muy dificil ver todo al mismo tiempo así que aquí
 iteraciones = size(errores,2);
 % Graficar errores en el primer cuadrante
 subplot(3, 1, 1);
-plot(1:iteraciones, errores, '-o');
+plot(1:iteraciones, errores(1,:), 'b');
 title('Error en cada iteración');
 xlabel('Número de iteración');
 ylabel('Error promedio');
@@ -125,6 +128,9 @@ grid on;
 % Ajusta el espacio entre subgráficos
 sgtitle('Comparación de errores y evolución de la primera fila');
 
+figure
+plot(1:iteraciones,W1total)
+
 % ---------------------------------------------------------------
 %% Definición de las funciones que se usan en este programa 
 % --------------------------------------------------------------
@@ -146,6 +152,7 @@ end
 %Definición de la función sigmoide
 function s = sigmoid(b,x)
    s = 1./(1+exp(-b*x)); 
+   s = s*1;
 end
 
 %Definición de la función SPDmatrix 

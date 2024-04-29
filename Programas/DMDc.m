@@ -19,7 +19,7 @@ X2 = X(:, 2:end);      %X_k+1
 
 % Definir la matriz G y Omega
 Omega = [X1;Y];
-
+% 
 %% Caso 1 B es conocida (la tomo de FEM)
 [U, S, V] = svd(X1, 'econ');
 
@@ -45,7 +45,7 @@ for i=1:6084-1
 end
 
 for i=1:6084-1
-    error=xtotal(i)-X(i);
+    error=xtotal(:,i)-X(:,i);
     errores(i) = mean(abs(error(:)));
 end
 t=linspace(0,6083,6083);
@@ -70,16 +70,19 @@ title('Sistema real');
 xlabel('Frame');
 ylabel('Posiciones y velocidades');
 grid on;
+
+
+
 %% Caso 2 B es desconocida
 
-% Aplicar la SVD (Singular Value Decomposition) a Omega
+% % Aplicar la SVD (Singular Value Decomposition) a Omega
 % [U, S, V] = svd(Omega, 'econ');
 % 
-% Elegir el rango de aproximación del rango S
+% % Elegir el rango de aproximación del rango S
 % p =  rank(Omega);  %rango de aproximación
 % 
 % 
-% Construir matrices truncadas y desplazadas
+% % Construir matrices truncadas y desplazadas
 % Ur = U(:, 1:p);
 % Sr = S(1:p, 1:p);
 % Vr = V(:, 1:p);
@@ -87,11 +90,11 @@ grid on;
 % %TODO: DEFINIR LO QUE ES N Y P
 % G= X2*Vr*(Sr\Ur');
 % 
-% Separar Ur1 y Ur2
+% % Separar Ur1 y Ur2
 % Ur1=Ur(1:p-1,:);
 % Ur2=Ur(p:end,:);
 % 
-% Encontrar A y B
+% % Encontrar A y B
 % A_tilde = X2*Vr*(Sr\Ur1');
 % B_tilde = X2*Vr*(Sr\Ur2');
 % 
@@ -105,7 +108,20 @@ grid on;
 %     
 % end
 % 
+% for i=1:6084-1
+%     error=xtotal(:,i)-X(:,i);
+%     errores(i) = mean(abs(error(:)));
+% end
 % t=linspace(0,6083,6083);
+% 
+% figure
+% plot(t, errores, '-');
+% title('Error en cada iteración');
+% xlabel('Número de iteración');
+% ylabel('Error promedio 2');
+% grid on;
+% 
+% figure
 % subplot(2, 1, 1);
 % plot(t, xtotal);
 % title('Sistema supuesto por DMD');
