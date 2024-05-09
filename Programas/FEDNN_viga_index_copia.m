@@ -10,7 +10,7 @@ global V1 W1 K1 K2 P V0 l Lambda A
 %% Datos de la simulación
 % ----------------------------------------------------
 %Cargo los datos acomodados de los experimentos
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat');
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/CodigosNN/Datos/DataAcomodada24.mat');
 h  = 0.01;							    % sample time
 N  = size(Data,2);						% number of iterations
 
@@ -25,7 +25,7 @@ W1 = ones(ne,ne)-1;			% Matriz de pesos
 us = MesuredData(1:20,1);       %Primer estado del sistema real
 u  = us;                        %Primer estado del sistema approx
 
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/Lambda.mat'); %Aquí cargo solo lambda
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/CodigosNN/Datos/Lambda.mat'); %Aquí cargo solo lambda
 Kmask 	= Kbc;
 V1		= V1.*Kmask;
 W1      = W1.*Kmask;
@@ -102,34 +102,34 @@ fila_a_comparar = 1; %Es muy dificil ver todo al mismo tiempo así que aquí
                      %puedo decidir cual nodo se va a comparar
 
 
-iteraciones = size(errores,2);
+iteraciones = linspace(0,60,6083);
+t=linspace(0,60,6084);
 % Graficar errores en el primer cuadrante
 subplot(3, 1, 1);
-plot(1:iteraciones, errores(1,:), '-o');
-title('Error en cada iteración');
-xlabel('Número de iteración');
-ylabel('Error promedio');
+plot(iteraciones, errores(1,:));
+title('Error');
+xlabel('Time (s)');
+ylabel('Average error');
 grid on;
 
 % Graficar evolución de la primera fila de MeasuredData y u en el segundo cuadrante
 subplot(3, 1, 2);
-plot(1:iteraciones+1, MesuredData(fila_a_comparar, :),'r');
-title('Evolución del nodo medido por el MoCap');
-xlabel('Número de iteración');
-ylabel('Valor');
+plot(t, MesuredData(fila_a_comparar, :),'r');
+title('Evolution of the node measured by the MoCap');
+xlabel('Time (s)');
+ylabel('Position (mm)');
 grid on;
 subplot(3,1,3)
-plot(1:iteraciones, utotal(fila_a_comparar, :),'g');
-title('Evolución del nodo aproximado por la red');
-xlabel('Número de iteración');
-ylabel('Valor');
+plot(iteraciones, utotal(fila_a_comparar, :),'g');
+title('Evolution of the node approximated by the network');
+xlabel('Time (s)');
+ylabel('Position (mm)');
 grid on;
 
-% Ajusta el espacio entre subgráficos
-sgtitle('Comparación de errores y evolución de la primera fila');
 
 figure
-plot(1:iteraciones,W1total)
+plot(iteraciones,W1total);
+title('Evolution of the weights');
 
 % ---------------------------------------------------------------
 %% Definición de las funciones que se usan en este programa 
