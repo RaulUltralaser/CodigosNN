@@ -1,0 +1,81 @@
+clc
+close all
+
+% % Frecuencia de muestreo
+% frecuencia_muestreo = 100; % Hz
+% 
+% % Número de muestras
+% num_muestras = size(t, 1); % Suponiendo que x es una matriz donde las filas son muestras y las columnas son series de datos
+% 
+% % Calcular el tiempo total de la señal
+% tiempo_total = num_muestras / frecuencia_muestreo;
+% 
+% % Crear vector de tiempo
+% tiempo = linspace(0, tiempo_total, num_muestras);
+% x = [x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20]; % Matriz de datos donde cada columna corresponde a una serie de datos x
+% 
+% % Colores para las líneas
+% colores = hsv(20); % Genera una matriz de colores distintos
+% 
+% % Graficar
+% figure;
+% hold on;
+% for i = 1:20
+%     plot(tiempo, x(:, i), 'Color', colores(i, :));
+% end
+% hold off;
+% 
+% % Etiquetas y título
+% xlabel('Tiempo');
+% ylabel('Valor de x');
+% title('Gráfica de x en función del tiempo');
+% 
+% % Crear gráficas individuales para cada serie de datos
+% for i = 1:20
+%     figure;
+%     plot(tiempo, x(:, i), 'Color', colores(i, :));
+%     xlabel('Tiempo');
+%     ylabel(['Valor de x', num2str(i)]);
+%     title(['Gráfica de x', num2str(i), ' en función del tiempo']);
+% end
+
+
+t=out.Comparison.time;
+x=out.Comparison.signals(1);
+x2=out.Comparison.signals(2);
+
+x=x.values;
+x2=x2.values;
+% Primero, eliminamos la dimensión innecesaria de x para facilitar el trabajo
+x = squeeze(x); % Ahora 'x' debería tener dimensiones 40x60001
+x2=squeeze(x2);
+% Número de estados
+num_estados = size(x, 1);
+
+% Plotear los estados
+figure; % Crear una nueva figura
+% Primer subplot para los valores de x
+subplot(2, 1, 1); % 2 filas, 1 columna, primer subplot
+hold on; % Mantener la misma figura para múltiples plots
+for i = 1:num_estados
+    plot(t, x(i, :));
+end
+hold off; % Liberar la figura
+xlabel('Time (s)');
+ylabel('Positions and velocities');
+title('System assumed by DNN');
+% legend show; % Mostrar la leyenda con los nombres de los estados
+grid on; % Mostrar una cuadrícula para facilitar la lectura
+
+% Segundo subplot para los valores de x2
+subplot(2, 1, 2); % 2 filas, 1 columna, segundo subplot
+hold on; % Mantener la misma figura para múltiples plots
+for i = 1:num_estados
+    plot(t, x2(i, :));
+end
+hold off; % Liberar la figura
+xlabel('Time (s)');
+ylabel('Valor del Estado');
+title('Evolución de los estados (x2) con el tiempo');
+% legend show; % Mostrar la leyenda con los nombres de los estados
+grid on; % Mostrar una cuadrícula para facilitar la lectura

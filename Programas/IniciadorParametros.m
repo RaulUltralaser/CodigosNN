@@ -174,7 +174,7 @@ impulse=10; %El valor de el impulso
 %% DNN SIMULACION REALES
 
 % load('~/Documentos/CodigosNN/Datos/DataAcomodada24.mat'); 
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/CodigosNN/Datos/DataAcomodada24.mat')
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat')
 X = Data;                   %Valores medidos
 Xmov=X(1:20,:)-X(1:20,1);   %Llevo los valores iniciales a cero
 X = [Xmov;X(20+1:end,:)];   %Formo X con la correción del offset
