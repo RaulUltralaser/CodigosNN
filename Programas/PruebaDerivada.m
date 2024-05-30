@@ -2,8 +2,8 @@ clc
 clearvars
 close all
 
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/CodigosNN/Datos/EstadosCalculadosPorFEDNN.mat');
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/CodigosNN/Datos/DataAcomodada24.mat');
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/EstadosCalculadosPorFEDNN.mat');
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat');
 
 %Guardo los datos reales
 Velocidades = Data(21:40,1:end-1); 
@@ -21,19 +21,21 @@ errores = mean(abs(error));
 t=linspace(0,60,6083);
 n=1;
 
-subplot(3, 1, 1);
+figure
 plot(t, errores);
-title('Error');
+title('Average error');
 xlabel('Time (s)');
-ylabel('Average errors');
+ylabel('Error');
 grid on;
-subplot(3, 1, 2);
+
+figure
+subplot(2, 1, 1);
 plot(t, Velocidades(n,:),'r');
 title('Evolution of the node measured by the MoCap');
 xlabel('Time (s)');
 ylabel('Velocity (mm/s)');
 grid on;
-subplot(3, 1, 3);
+subplot(2, 1, 2);
 plot(t, VelocidadesRed(n,:),'g');
 title('Derivative from the positions aproximated by the network');
 xlabel('Time (s)');

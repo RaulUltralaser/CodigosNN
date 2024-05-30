@@ -10,7 +10,7 @@ global V1 W1 K1 K2 P V0 l Lambda A
 %% Datos de la simulación
 % ----------------------------------------------------
 %Cargo los datos acomodados de los experimentos
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/CodigosNN/Datos/DataAcomodada24.mat');
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat');
 h  = 0.01;							    % sample time
 N  = size(Data,2);						% number of iterations
 
@@ -25,7 +25,7 @@ W1 = ones(ne,ne)-1;			% Matriz de pesos
 us = MesuredData(1:20,1);       %Primer estado del sistema real
 u  = us;                        %Primer estado del sistema approx
 
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/CodigosNN/Datos/Lambda.mat'); %Aquí cargo solo lambda
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/Lambda.mat'); %Aquí cargo solo lambda
 Kmask 	= Kbc;
 V1		= V1.*Kmask;
 W1      = W1.*Kmask;
@@ -98,30 +98,31 @@ end
 
 %% PLOTEOS
 
-fila_a_comparar = 1; %Es muy dificil ver todo al mismo tiempo así que aquí 
+fila_a_comparar = 15; %Es muy dificil ver todo al mismo tiempo así que aquí 
                      %puedo decidir cual nodo se va a comparar
 
 
 iteraciones = linspace(0,60,6083);
 t=linspace(0,60,6084);
 % Graficar errores en el primer cuadrante
-subplot(3, 1, 1);
+figure
 plot(iteraciones, errores(1,:));
-title('Error');
+title('Average error');
 xlabel('Time (s)');
-ylabel('Average error');
+ylabel('Error');
 grid on;
 
 % Graficar evolución de la primera fila de MeasuredData y u en el segundo cuadrante
-subplot(3, 1, 2);
-plot(t, MesuredData(fila_a_comparar, :),'r');
-title('Evolution of the node measured by the MoCap');
+figure
+subplot(2, 1, 1);
+plot(t, MesuredData(1:20, :));
+title('Evolution of nodes measured by the MoCap');
 xlabel('Time (s)');
 ylabel('Position (mm)');
 grid on;
 subplot(3,1,3)
-plot(iteraciones, utotal(fila_a_comparar, :),'g');
-title('Evolution of the node approximated by the network');
+plot(iteraciones, utotal(:, :));
+title('Evolution of nodes approximated by the network');
 xlabel('Time (s)');
 ylabel('Position (mm)');
 grid on;
