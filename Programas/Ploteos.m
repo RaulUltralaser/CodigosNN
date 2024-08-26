@@ -39,61 +39,59 @@ close all
 %     title(['Gráfica de x', num2str(i), ' en función del tiempo']);
 % end
 
-%% Esto es para plotear lo de simulink
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/ResultadosSimulinkDNN.mat')
-
-t=out.Comparison.time;
-x=out.Comparison.signals(1);
-x2=out.Comparison.signals(2);
-
-x=x.values;
-x2=x2.values;
-% Primero, eliminamos la dimensión innecesaria de x para facilitar el trabajo
-x = squeeze(x); % Ahora 'x' debería tener dimensiones 40x60001
-x2=squeeze(x2);
-% Número de estados
-num_estados = size(x, 1);
-
-% Plotear los estados
-figure; % Crear una nueva figura
-% Primer subplot para los valores de x
-subplot(2, 1, 1); % 2 filas, 1 columna, primer subplot
-hold on; % Mantener la misma figura para múltiples plots
-for i = 1:num_estados
-    plot(t, x(i, :));
-end
-hold off; % Liberar la figura
-xlabel('Time (s)');
-ylabel('Positions and velocities');
-title('System assumed by DNN');
-% legend show; % Mostrar la leyenda con los nombres de los estados
-grid on; % Mostrar una cuadrícula para facilitar la lectura
-
-% Segundo subplot para los valores de x2
-subplot(2, 1, 2); % 2 filas, 1 columna, segundo subplot
-hold on; % Mantener la misma figura para múltiples plots
-for i = 1:num_estados
-    plot(t, x2(i, :));
-end
-hold off; % Liberar la figura
-xlabel('Time (s)');
-ylabel('Positions and velocities');
-title('Real measurements');
-% legend show; % Mostrar la leyenda con los nombres de los estados
-grid on; % Mostrar una cuadrícula para facilitar la lectura
-
-
-figure
-hold on; % Mantener la misma figura para múltiples plots
-for i = 1:num_estados
-    plot(t, x(i, :));
-end
-hold off; % Liberar la figura
-xlabel('Time (s)');
-ylabel('Positions and velocities');
-title('System assumed by DNN');
-grid on
+%% Esto es para plotear lo de simulink ES DECIR DNN
 % 
+% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/ResultadosSimulinkDNN.mat')
+% % 
+% t=out.Comparison.time;
+% x=out.Comparison.signals(1);
+% x2=out.Comparison.signals(2);
+% x=x.values;
+% x2=x2.values;
+% % Primero, eliminamos la dimensión innecesaria de x para facilitar el trabajo
+% x = squeeze(x); % Ahora 'x' debería tener dimensiones 40x60001
+% x2=squeeze(x2);
+% % Número de estados
+% num_estados = size(x, 1);
+% 
+% figure
+% hold on; % Mantener la misma figura para múltiples plots
+% for i = 1:num_estados
+%     plot(t, x(i, :));
+% end
+% hold off; % Liberar la figura
+% xlabel('Time (s)');
+% ylabel('Positions and velocities');
+% title('System assumed by DNN');
+% grid on
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Leyendas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% positionLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
+% velocityLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
+% 
+% % Combine position and velocity labels for the legend
+% legendLabels = [positionLabels, velocityLabels];
+% 
+% % Create the legend with 2 columns
+% leg = legend(legendLabels, 'Location', 'eastoutside', 'NumColumns', 2);
+% 
+% % Get the position of the legend
+% legendPosition = leg.Position;
+% 
+% % Adjust the Y offsets to place the text correctly above the legend
+% % Increase or decrease the value for fine-tuning
+% positionTextY = legendPosition(2) + 0.8054;  % Adjust this value for "Positions"
+% velocityTextY = legendPosition(2) + 0.8054;  % Adjust this value for "Velocities"
+% 
+% % Add "Positions" and "Velocities" text above the legend using annotation
+% annotation('textbox', [legendPosition(1),positionTextY, 0, 0], ...
+%     'String', 'Positions', 'FitBoxToText', 'on', 'EdgeColor', 'none', 'FontWeight', 'bold');
+% 
+% annotation('textbox', [legendPosition(1)+.2, velocityTextY, 0, 0], ...
+%     'String', 'Velocities', 'FitBoxToText', 'on', 'EdgeColor', 'none', 'FontWeight', 'bold');
+
+
+%% Esto grafica errores del DNN 
 % t=out.Errores.time;
 % E=out.Errores.signals.values;
 % 
@@ -119,28 +117,21 @@ grid on
 
 
 
-
-
-
-
-
-
-
 %% Esto es la imagen de todos juntos 
 
-% clearvars
-% 
-% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DatosSeparadosPorMetodo.mat')
-% 
-% %Quito el offset de los datos
-% Reales=Reales(:,:)-Reales(:,1);
-% FEDNN=FEDNN(:,:)-FEDNN(:,1);
-% 
-% Tf=6001; %El minimo valor de columnas de los metodos
-% f=19;  %Fila que quiero mostrar
-% t=linspace(0,60,Tf);
+clearvars
+%Estos datos son de todos los metodos
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DatosSeparadosPorMetodo.mat')
 
-% Crear la figura principal
+Tf=6001;             %El minimo valor de columnas de los metodos
+f=19;                %Fila que quiero mostrar
+t=linspace(0,60,Tf); %Genero un vector de tiempo
+
+%Quito el offset de los datos
+Reales=Reales(:,:)-Reales(:,1);
+FEDNN=FEDNN(:,:)-FEDNN(:,1);
+
+%% Crear la figura principal
 % figure
 % hold on
 % plot(t, DMD1(f,1:Tf), '-b') % Azul
@@ -148,17 +139,19 @@ grid on
 % plot(t, FEDNN(f,1:Tf), '-r') % Verde
 % plot(t, DNN(f,1:Tf), '-g') % Magenta
 % plot(t, Reales(f,1:Tf), '--k') % Línea discontinua negra
-% title('Comparison between the different nodes and the real data');
+% title({'Comparison between the different nodes', 'and the real data'})
 % xlabel('Time (s)');
-% ylabel('Values of one node');
+% ylabel('Position of the last node (mm)');
 % grid on;
 % 
-% % Definir la región para el zoom (ajusta los valores de acuerdo a tus necesidades)
-% x_zoom = [50, 55]; % Ejemplo de rango de tiempo
-% y_zoom = [2,6]; 
+% % Create the legend (It's easier to change the name manually)
+% legend('Location', 'eastoutside');
+% % Definir la región para el zoom 
+% x_zoom = [50, 55]; %Tiempo
+% y_zoom = [2,6];    %Valor
 % 
 % % Crear un nuevo eje para el zoom
-% axes('Position', [0.6 0.6 0.26 0.26]) % [x, y, width, height] ajustar según sea necesario
+% axes('Position', [0.45 0.6 0.26 0.26]) % [x, y, width, height] ajustar según sea necesario
 % box on
 % hold on
 % 
@@ -175,7 +168,8 @@ grid on
 % % Volver al eje principal (opcional)
 % axes(gca)
 
-%DMD CASO 1
+
+%% DMDCaso1
 % figure
 % plot(t,DMD1(:,1:Tf))
 % title('System assumed by DMD')
@@ -183,33 +177,76 @@ grid on
 % xlabel('Time(s)')
 % grid on
 
-%DMD CASO 2
+%% DMDCaso2
 % figure
 % plot(t,DMD2(:,1:Tf))
 % title('System assumed by DMD')
 % ylabel('Positions and velocities')
 % xlabel('Time(s)')
 % grid on
-% 
-% %DNN
+
+%% RealData
 % figure
-% plot(t,DNN(f,1:Tf))
-% title('System assumed by DNN')
-% ylabel('Positions and velocities')
-% xlabel('Time(s)')
+% plot(t, Reales(:, 1:Tf))
+% title('Real Measurements')
+% ylabel('Positions and Velocities (mm-mm/s)')
+% xlabel('Time (s)')
 % grid on
 
-% %FEDNN
-% figure
-% plot(t,FEDNN(:,1:Tf))
-% title('System assumed by FEDNN')
-% ylabel('Positions and velocities')
-% xlabel('Time(s)')
-% grid on
+%%%%%%%%%%%%%%%%%%%%%%Las leyendas funcionan igual con las figuras DMD CASO
+%%%%%%%%%%%%%%%%%%%%%%1 Y CASO 2 Y REAL DATA, DNN Y FEDNN SON CASO
+%%%%%%%%%%%%%%%%%%%%%%DISTINTOS
+% % Create cell arrays for node labels
+% positionLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
+% velocityLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
 % 
-% figure
-% plot(t,Reales(:,1:Tf))
-% title('Real Mesurements')
-% ylabel('Positions and velocities')
-% xlabel('Time(s)')
-% grid on
+% % Combine position and velocity labels for the legend
+% legendLabels = [positionLabels, velocityLabels];
+% 
+% % Create the legend with 2 columns
+% leg = legend(legendLabels, 'Location', 'eastoutside', 'NumColumns', 2);
+% 
+% % Get the position of the legend
+% legendPosition = leg.Position;
+% 
+% % Adjust the Y offsets to place the text correctly above the legend
+% % Increase or decrease the value for fine-tuning
+% positionTextY = legendPosition(2) + 0.8054;  % Adjust this value for "Positions"
+% velocityTextY = legendPosition(2) + 0.8054;  % Adjust this value for "Velocities"
+% 
+% % Add "Positions" and "Velocities" text above the legend using annotation
+% annotation('textbox', [legendPosition(1),positionTextY, 0, 0], ...
+%     'String', 'Positions', 'FitBoxToText', 'on', 'EdgeColor', 'none', 'FontWeight', 'bold');
+% 
+% annotation('textbox', [legendPosition(1)+.2, velocityTextY, 0, 0], ...
+%     'String', 'Velocities', 'FitBoxToText', 'on', 'EdgeColor', 'none', 'FontWeight', 'bold');
+
+
+%% FEDNN
+figure
+plot(t,FEDNN(:,1:Tf))
+title('System assumed by FEDNN')
+ylabel('Positions and velocities')
+xlabel('Time(s)')
+grid on
+
+% Create cell arrays for node labels
+positionLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
+
+% Combine position and velocity labels for the legend
+legendLabels = positionLabels;
+
+% Create the legend with 2 columns
+leg = legend(legendLabels, 'Location', 'eastoutside');
+
+% Get the position of the legend
+legendPosition = leg.Position;
+
+% Adjust the Y offsets to place the text correctly above the legend
+% Increase or decrease the value for fine-tuning
+positionTextY = legendPosition(2)+.80 ;  % Adjust this value for "Positions"
+
+% Add "Positions" and "Velocities" text above the legend using annotation
+annotation('textbox', [legendPosition(1),positionTextY, 0, 0], ...
+    'String', 'Positions', 'FitBoxToText', 'on', 'EdgeColor', 'none', 'FontWeight', 'bold');
+
