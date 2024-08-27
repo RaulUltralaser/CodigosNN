@@ -226,7 +226,7 @@ FEDNN=FEDNN(:,:)-FEDNN(:,1);
 figure
 plot(t,FEDNN(:,1:Tf))
 title('System assumed by FEDNN')
-ylabel('Positions and velocities')
+ylabel('Positions (mm)')
 xlabel('Time(s)')
 grid on
 
