@@ -1,5 +1,6 @@
 clc
 close all
+clearvars
 
 % % Frecuencia de muestreo
 % frecuencia_muestreo = 100; % Hz
@@ -41,29 +42,29 @@ close all
 
 %% Esto es para plotear lo de simulink ES DECIR DNN
 % 
-% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/ResultadosSimulinkDNN.mat')
-% % 
-% t=out.Comparison.time;
-% x=out.Comparison.signals(1);
-% x2=out.Comparison.signals(2);
-% x=x.values;
-% x2=x2.values;
-% % Primero, eliminamos la dimensión innecesaria de x para facilitar el trabajo
-% x = squeeze(x); % Ahora 'x' debería tener dimensiones 40x60001
-% x2=squeeze(x2);
-% % Número de estados
-% num_estados = size(x, 1);
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/ResultadosSimulinkDNN.mat')
 % 
-% figure
-% hold on; % Mantener la misma figura para múltiples plots
-% for i = 1:num_estados
-%     plot(t, x(i, :));
-% end
-% hold off; % Liberar la figura
-% xlabel('Time (s)');
-% ylabel('Positions and velocities');
-% title('System assumed by DNN');
-% grid on
+t=out.Comparison.time;
+x=out.Comparison.signals(1);
+x2=out.Comparison.signals(2);
+x=x.values;
+x2=x2.values;
+% Primero, eliminamos la dimensión innecesaria de x para facilitar el trabajo
+x = squeeze(x); % Ahora 'x' debería tener dimensiones 40x60001
+x2=squeeze(x2); %Estos son los reales se DNN ES x
+% Número de estados
+num_estados = size(x, 1);
+% 
+figure
+hold on; % Mantener la misma figura para múltiples plots
+for i = 1:19
+    plot(t, x(i, :));
+end
+hold off; % Liberar la figura
+xlabel('Time (s)');
+ylabel('Positions and velocities');
+title('System assumed by DNN');
+grid on
 % 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Leyendas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % positionLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
@@ -119,17 +120,17 @@ close all
 
 %% Esto es la imagen de todos juntos 
 
-clearvars
-%Estos datos son de todos los metodos
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DatosSeparadosPorMetodo.mat')
-
-Tf=6001;             %El minimo valor de columnas de los metodos
-f=19;                %Fila que quiero mostrar
-t=linspace(0,60,Tf); %Genero un vector de tiempo
-
-%Quito el offset de los datos
-Reales=Reales(:,:)-Reales(:,1);
-FEDNN=FEDNN(:,:)-FEDNN(:,1);
+% clearvars
+% %Estos datos son de todos los metodos
+% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DatosSeparadosPorMetodo.mat')
+% 
+% Tf=6001;             %El minimo valor de columnas de los metodos
+% f=19;                %Fila que quiero mostrar
+% t=linspace(0,60,Tf); %Genero un vector de tiempo
+% 
+% %Quito el offset de los datos
+% Reales=Reales(:,:)-Reales(:,1);
+% FEDNN=FEDNN(:,:)-FEDNN(:,1);
 
 %% Crear la figura principal
 % figure
@@ -223,30 +224,30 @@ FEDNN=FEDNN(:,:)-FEDNN(:,1);
 
 
 %% FEDNN
-figure
-plot(t,FEDNN(:,1:Tf))
-title('System assumed by FEDNN')
-ylabel('Positions (mm)')
-xlabel('Time(s)')
-grid on
-
-% Create cell arrays for node labels
-positionLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
-
-% Combine position and velocity labels for the legend
-legendLabels = positionLabels;
-
-% Create the legend with 2 columns
-leg = legend(legendLabels, 'Location', 'eastoutside');
-
-% Get the position of the legend
-legendPosition = leg.Position;
-
-% Adjust the Y offsets to place the text correctly above the legend
-% Increase or decrease the value for fine-tuning
-positionTextY = legendPosition(2)+.80 ;  % Adjust this value for "Positions"
-
-% Add "Positions" and "Velocities" text above the legend using annotation
-annotation('textbox', [legendPosition(1),positionTextY, 0, 0], ...
-    'String', 'Positions', 'FitBoxToText', 'on', 'EdgeColor', 'none', 'FontWeight', 'bold');
+% figure
+% plot(t,FEDNN(:,1:Tf))
+% title('System assumed by FEDNN')
+% ylabel('Positions (mm)')
+% xlabel('Time(s)')
+% grid on
+% 
+% % Create cell arrays for node labels
+% positionLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
+% 
+% % Combine position and velocity labels for the legend
+% legendLabels = positionLabels;
+% 
+% % Create the legend with 2 columns
+% leg = legend(legendLabels, 'Location', 'eastoutside');
+% 
+% % Get the position of the legend
+% legendPosition = leg.Position;
+% 
+% % Adjust the Y offsets to place the text correctly above the legend
+% % Increase or decrease the value for fine-tuning
+% positionTextY = legendPosition(2)+.80 ;  % Adjust this value for "Positions"
+% 
+% % Add "Positions" and "Velocities" text above the legend using annotation
+% annotation('textbox', [legendPosition(1),positionTextY, 0, 0], ...
+%     'String', 'Positions', 'FitBoxToText', 'on', 'EdgeColor', 'none', 'FontWeight', 'bold');
 
