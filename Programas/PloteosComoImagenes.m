@@ -15,20 +15,20 @@ Reales=Reales(:,:)-Reales(:,1);
 FEDNN=FEDNN(:,:)-FEDNN(:,1);
 
 % Generamos una matriz aleatoria como ejemplo (debes reemplazarla con tus datos reales):
-posiciones = Reales(1:20,1:Tf);
+% posiciones = Reales(1:20,1:Tf);
 % posiciones = FEDNN(1:20,1:Tf);
 % posiciones = DMD1(1:20,1:Tf);
 % posiciones = DMD2(1:20,1:Tf);
-% posiciones = DNN(1:20,1:10:60001); %Este es especial porque use un tiempo de simulación diferente
+posiciones = DNN(1:20,1:10:60001); %Este es especial porque use un tiempo de simulación diferente
 
 % Crear la imagen
 figure;
 imagesc(t, 20:1, posiciones); % Usamos imagesc para crear la imagen
 colorbar; % Muestra la barra de colores
-xlabel('Tiempo');
-ylabel('Nodos');
-title('Posiciones de los Nodos en el Tiempo');
-colormap(parula); % O elige otro esquema de colores como 'parula', 'hot', etc.
+xlabel('Time (s)');
+ylabel('Node position (mm)');
+% title('DNN');
+colormap(parula); % Puede ser cambiado a: 'parula', 'hot',
 
 
 
