@@ -21,8 +21,8 @@ posicionesREALES=Reales(1:20,1:Tf);
 % posiciones = Reales(1:20,1:Tf);
 % posiciones = FEDNN(1:20,1:Tf);
 % posiciones = DMD1(1:20,1:Tf);
-posiciones = DMD2(1:20,1:Tf);
-% posiciones = DNN(1:20,1:10:60001); %Este es especial porque use un tiempo de simulación diferente
+% posiciones = DMD2(1:20,1:Tf);
+posiciones = DNN(1:20,1:10:60001); %Este es especial porque use un tiempo de simulación diferente
 
 % Resta valores reales menos valores a comparar
 graficar=posicionesREALES-posiciones;
@@ -32,46 +32,48 @@ graficar=posicionesREALES-posiciones;
 %                    0.5, 0.5, 0.5;  % Gris medio
 %                    1, 1, 1]; % Blanco
 
-% % Crear la imagen
+% Crear la imagen
 % figure;
 % imagesc(t, 20:1, posiciones); % Usamos imagesc para crear la imagen
 % colorbar; % Muestra la barra de colores
 % xlabel('Time (s)');
-% ylabel('Node position (mm)');
+% ylabel('Node Number');
 % % title('DNN');
 % % colormap(custom_colormap); % Aplicar la paleta de colores
 % colormap(cmocean('gray'));
 % % colormap(parula); % Puede ser cambiado a: 'parula', 'hot',
 
 % Crear graficas de comparación en x,t
-% figure;
-% imagesc(t, 20:1, graficar); % Usamos imagesc para crear la imagen
-% colorbar; % Muestra la barra de colores
-% xlabel('Error over time');
-% ylabel('Erro in position');
-% % colormap(custom_colormap); % Aplicar la paleta de colores
-% colormap(cmocean('gray'));
-% % colormap(parula); % Puede ser cambiado a: 'parula', 'hot',
+figure;
+imagesc(t, 20:1, graficar); % Usamos imagesc para crear la imagen
+colorbar; % Muestra la barra de colores
+xlabel('Error over time');
+ylabel('Node number');
+% colormap(custom_colormap); % Aplicar la paleta de colores
+colormap(cmocean('gray'));
+% colormap(parula); % Puede ser cambiado a: 'parula', 'hot',
 
 
 % Graficas del error con respecto al tiempo
 normas=vecnorm(graficar);
 figure;
-plot(t, normas, 'r:', 'LineWidth', 1.5); % Graficamos las normas de cada columna con respecto al tiempo
+plot(t, normas, 'g:', 'LineWidth', 1.5); % Graficamos las normas de cada columna con respecto al tiempo
 xlabel('Time (s)');
 ylabel('Error');
 grid on; % Añade una rejilla para facilitar la lectura
 
 
 % Todos los errores en una misma imagen
-% norma1=vecnorm(posicionesREALES-FEDNN(1:20,1:Tf));
-% norma2=vecnorm(posicionesREALES-DMD2(1:20,1:Tf));
-% norma3=vecnorm(posicionesREALES-DNN(1:20,1:10:60001));
-% figure;
-% hold on
-% plot(t,norma1,'LineWidth', .5);
-% plot(t,norma2,'--','LineWidth', .5);
-% plot(t,norma3,':','LineWidth', .5);
-% grid on
-% hold off
+norma1=vecnorm(posicionesREALES-FEDNN(1:20,1:Tf));
+norma2=vecnorm(posicionesREALES-DMD2(1:20,1:Tf));
+norma3=vecnorm(posicionesREALES-DNN(1:20,1:10:60001));
+figure;
+hold on
+plot(t,norma1,'LineWidth', .5);
+plot(t,norma2,'--','LineWidth', .5);
+plot(t,norma3,'g:','LineWidth', .5);
+xlabel('Time (s)');
+ylabel('Error');
+grid on
+hold off
 
