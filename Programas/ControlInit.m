@@ -3,25 +3,25 @@ clearvars
 close all
 
 load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/PesosFEDNN.mat');
-n=size(A,1);
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat');
 
-A=[A A];
-Psi1=[V1 zeros(n,n)];
-Psi2=[zeros(n,n) V2];
+n=20; %Nodos descontando el fijo
 
-V=zeros(2*n,1);
-% sigmoid(Psi1,V)
-phi_sigmoid(Psi2,V)
 
-function s = sigmoid(b,x)
-   s = 1./(1+exp(-b*x)); 
+V0=Data(:,1);
+V0(1:20)=Data(1:20,1)-35*ones(20,1);
+Am=A(21:40,1:20);
+Psi1=[V1 V2];
+Psi2=[V1 V2];
+B=[zeros(n,n);eye(n,n)];
+
+% 
+eig_vals = eig(A); % Calcula los valores propios
+is_hurwitz = all(real(eig_vals) < 0); % Verifica si todos tienen parte real negativa
+
+if is_hurwitz
+    disp('La matriz es Hurwitz.');
+else
+    disp('La matriz no es Hurwitz.');
 end
 
-function phi=phi_sigmoid(b,xt)
-    phi=zeros(20,20);
-   for i = 1:20
-        for j = 1:20
-            phi(i, j) = sigmoid(b, xt(i));
-        end
-    end
-end
