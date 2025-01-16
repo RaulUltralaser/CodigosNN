@@ -11,8 +11,8 @@ n=20; %Nodos descontando el fijo
 V0=Data(:,1);
 V0(1:20)=Data(1:20,1)-35*ones(20,1);
 Am=A(21:40,1:20);
-Psi1=[V1 V2];
-Psi2=[V1 V2];
+Psi1=[V1 zeros(n,n)];
+Psi2=[zeros(n,n) V2];
 B=[zeros(n,n);eye(n,n)];
 
 % 
