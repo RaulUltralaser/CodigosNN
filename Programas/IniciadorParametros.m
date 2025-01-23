@@ -75,7 +75,7 @@ for j=1:m-1
 end
 
 H=zeros(p,N);%Inicializo la matriz de salidas
-
+zetad=0.7;
 %REllena la matriz de salida igual que la de fuerzas
 hi=[1,0];
 i=1;
