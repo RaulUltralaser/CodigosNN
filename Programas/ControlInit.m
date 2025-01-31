@@ -27,7 +27,7 @@ B=[zeros(n,n);eye(n,n)];
 
 %% Para los controles tendría que elegir sobre que nodo quiero que se aplique
 %%tanto la perturbación como el control
-nodeControl=3;
+nodeControl=1;
 nodeDisturbe=2;
 
 NC=zeros(1,40);
@@ -38,7 +38,7 @@ NCP(1,nodeControl)=1;
 
 %% Control de Poznyack
 
-k=-10*ones(n,1);
+k=.6*ones(n,1);
 
 
 %% Control modal
