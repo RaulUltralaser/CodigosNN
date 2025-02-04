@@ -38,8 +38,8 @@ NCP(1,nodeControl)=1;
 
 %% Control de Poznyack
 
-k=ones(n,1);
-k(nodeControl)=3;
+k=2.55;
+% k(nodeControl)=3;
 
 
 %% Control modal
