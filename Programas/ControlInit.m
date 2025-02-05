@@ -38,8 +38,8 @@ NCP(1,nodeControl)=1;
 
 %% Control de Poznyack
 
-k=2.55;
-% k(nodeControl)=3;
+gains=[2.55 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1  1 1 1 1];
+k=diag(gains);
 
 
 %% Control modal
