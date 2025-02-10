@@ -42,29 +42,29 @@ clearvars
 
 %% Esto es para plotear lo de simulink ES DECIR DNN
 % 
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/ResultadosSimulinkDNN.mat')
-% 
-t=out.Comparison.time;
-x=out.Comparison.signals(1);
-x2=out.Comparison.signals(2);
-x=x.values;
-x2=x2.values;
-% Primero, eliminamos la dimensión innecesaria de x para facilitar el trabajo
-x = squeeze(x); % Ahora 'x' debería tener dimensiones 40x60001
-x2=squeeze(x2); %Estos son los reales se DNN ES x
-% Número de estados
-num_estados = size(x, 1);
-% 
-figure
-hold on; % Mantener la misma figura para múltiples plots
-for i = 1:19
-    plot(t, x(i, :));
-end
-hold off; % Liberar la figura
-xlabel('Time (s)');
-ylabel('Positions and velocities');
-title('System assumed by DNN');
-grid on
+% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/ResultadosSimulinkDNN.mat')
+% % 
+% t=out.Comparison.time;
+% x=out.Comparison.signals(1);
+% x2=out.Comparison.signals(2);
+% x=x.values;
+% x2=x2.values;
+% % Primero, eliminamos la dimensión innecesaria de x para facilitar el trabajo
+% x = squeeze(x); % Ahora 'x' debería tener dimensiones 40x60001
+% x2=squeeze(x2); %Estos son los reales se DNN ES x
+% % Número de estados
+% num_estados = size(x, 1);
+% % 
+% figure
+% hold on; % Mantener la misma figura para múltiples plots
+% for i = 1:19
+%     plot(t, x(i, :));
+% end
+% hold off; % Liberar la figura
+% xlabel('Time (s)');
+% ylabel('Positions and velocities');
+% title('System assumed by DNN');
+% grid on
 % 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Leyendas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % positionLabels = arrayfun(@(n) sprintf('Node %d', n), 1:20, 'UniformOutput', false);
@@ -122,52 +122,52 @@ grid on
 
 % clearvars
 % %Estos datos son de todos los metodos
-% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DatosSeparadosPorMetodo.mat')
-% 
-% Tf=6001;             %El minimo valor de columnas de los metodos
-% f=19;                %Fila que quiero mostrar
-% t=linspace(0,60,Tf); %Genero un vector de tiempo
-% 
-% %Quito el offset de los datos
-% Reales=Reales(:,:)-Reales(:,1);
-% FEDNN=FEDNN(:,:)-FEDNN(:,1);
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DatosSeparadosPorMetodo.mat')
+
+Tf=6001;             %El minimo valor de columnas de los metodos
+f=19;                %Fila que quiero mostrar
+t=linspace(0,60,Tf); %Genero un vector de tiempo
+
+%Quito el offset de los datos
+Reales=Reales(:,:)-Reales(:,1);
+FEDNN=FEDNN(:,:)-FEDNN(:,1);
 
 %% Crear la figura principal
-% figure
-% hold on
-% plot(t, DMD1(f,1:Tf), '-b') % Azul
-% plot(t, DMD2(f,1:Tf), '-m') % Rojo
-% plot(t, FEDNN(f,1:Tf), '-r') % Verde
-% plot(t, DNN(f,1:Tf), '-g') % Magenta
-% plot(t, Reales(f,1:Tf), '--k') % Línea discontinua negra
-% title({'Comparison between the different nodes', 'and the real data'})
-% xlabel('Time (s)');
-% ylabel('Position of the last node (mm)');
-% grid on;
-% 
-% % Create the legend (It's easier to change the name manually)
-% legend('Location', 'eastoutside');
-% % Definir la región para el zoom 
-% x_zoom = [50, 55]; %Tiempo
-% y_zoom = [2,6];    %Valor
-% 
-% % Crear un nuevo eje para el zoom
-% axes('Position', [0.45 0.6 0.26 0.26]) % [x, y, width, height] ajustar según sea necesario
-% box on
-% hold on
-% 
-% % Graficar los mismos datos en la nueva región de zoom
-% plot(t, DMD1(f,1:Tf), '-b') 
-% plot(t, DMD2(f,1:Tf), '-m') 
-% plot(t, FEDNN(f,1:Tf), '-r', 'LineWidth', 1.2) 
-% plot(t, DNN(f,1:Tf), '-g') 
-% plot(t, Reales(f,1:Tf), '--k', 'LineWidth', 2) % Línea discontinua negra
-% xlim(x_zoom)
-% ylim(y_zoom)
-% grid on
-% 
-% % Volver al eje principal (opcional)
-% axes(gca)
+figure
+hold on
+plot(t, DMD1(f,1:Tf), '-b') % Azul
+plot(t, DMD2(f,1:Tf), '-m') % Rojo
+plot(t, FEDNN(f,1:Tf), '-r') % Verde
+plot(t, DNN(f,1:Tf), '-g') % Magenta
+plot(t, Reales(f,1:Tf), '--k') % Línea discontinua negra
+title({'Comparison between the different nodes', 'and the real data'})
+xlabel('Time (s)');
+ylabel('Position of the last node (mm)');
+grid on;
+
+% Create the legend (It's easier to change the name manually)
+legend('Location', 'eastoutside');
+% Definir la región para el zoom 
+x_zoom = [50, 55]; %Tiempo
+y_zoom = [2,6];    %Valor
+
+% Crear un nuevo eje para el zoom
+axes('Position', [0.45 0.6 0.26 0.26]) % [x, y, width, height] ajustar según sea necesario
+box on
+hold on
+
+% Graficar los mismos datos en la nueva región de zoom
+plot(t, DMD1(f,1:Tf), '-b') 
+plot(t, DMD2(f,1:Tf), '-m') 
+plot(t, FEDNN(f,1:Tf), '-r', 'LineWidth', 1.2) 
+plot(t, DNN(f,1:Tf), '-g') 
+plot(t, Reales(f,1:Tf), '--k', 'LineWidth', 2) % Línea discontinua negra
+xlim(x_zoom)
+ylim(y_zoom)
+grid on
+
+% Volver al eje principal (opcional)
+axes(gca)
 
 
 %% DMDCaso1
@@ -187,12 +187,12 @@ grid on
 % grid on
 
 %% RealData
-% figure
-% plot(t, Reales(:, 1:Tf))
-% title('Real Measurements')
-% ylabel('Positions and Velocities (mm-mm/s)')
-% xlabel('Time (s)')
-% grid on
+figure
+plot(t, Reales(:, 1:Tf))
+title('Real Measurements')
+ylabel('Positions and Velocities (mm-mm/s)')
+xlabel('Time (s)')
+grid on
 
 %%%%%%%%%%%%%%%%%%%%%%Las leyendas funcionan igual con las figuras DMD CASO
 %%%%%%%%%%%%%%%%%%%%%%1 Y CASO 2 Y REAL DATA, DNN Y FEDNN SON CASO
