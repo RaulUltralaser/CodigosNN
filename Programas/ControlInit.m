@@ -27,8 +27,8 @@ B=[zeros(n,n);eye(n,n)];
 
 %% Para los controles tendría que elegir sobre que nodo quiero que se aplique
 %%tanto la perturbación como el control
-nodeControl=1;
-nodeDisturbe=2;
+nodeControl=3;
+nodeDisturbe=5;
 
 NC=zeros(1,40);
 NC(1,nodeControl)=1;
