@@ -25,6 +25,17 @@ B=[zeros(n,n);eye(n,n)];
 %     disp('La matriz no es Hurwitz.');
 % end
 
+%% Propuesta de control con H infinito
+
+% A_h=W1;
+% B_h=W2;
+% sys=ss(A_h,B_h,eye(20),0);
+% % Definir pesos de desempeño (ej: penalizar error y esfuerzo de control)
+% W1_h = tf(1, [0.1 1]);   % Peso sobre el error
+% W2_h = tf(0.1, [1 0]);    % Peso sobre el control
+% [K, ~, ~] = hinfsyn(sys, W1_h, W2_h);
+
+
 %% Para los controles tendría que elegir sobre que nodo quiero que se aplique
 %%tanto la perturbación como el control
 nodeControl=3;
