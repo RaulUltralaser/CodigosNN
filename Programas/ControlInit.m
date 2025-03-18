@@ -11,6 +11,7 @@ n=20; %Nodos descontando el fijo
 V0=Data(:,1);
 V0(1:20)=Data(1:20,1)-mean(Data(1:20,1));
 Am=A(21:40,:);
+Ap=Am(:,1:20);
 Psi1=[V1 zeros(n,n)];
 Psi2=[zeros(n,n) V2];
 B=[zeros(n,n);eye(n,n)];
@@ -192,7 +193,12 @@ gp= -2*w2(i)*zetad/(bi*ci);
 gv= -2*w(i)*zetag/(bi*ci);
 
 
+%% Controlador de Modos deslinzantes
 
 
-P=diag(ones(20,1));
+%P para calcular el controlador de Poznyack
+P=lyap(Ap,eye(20));
+
+
+%% Controlador MRAC
 
