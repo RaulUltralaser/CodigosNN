@@ -201,5 +201,7 @@ P=lyap(Ap,eye(20));
 
 
 %% Controlador MRAC
-alpha=2;
+alpha=.1;
 Gamma=alpha*eye(20);
+
+
