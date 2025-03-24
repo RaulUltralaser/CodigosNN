@@ -39,8 +39,8 @@ B=[zeros(n,n);eye(n,n)];
 
 %% Para los controles tendría que elegir sobre que nodo quiero que se aplique
 %%tanto la perturbación como el control
-nodeControl=10;
-nodeDisturbe=9;
+nodeControl=2;
+nodeDisturbe=3;
 
 NC=zeros(1,40);
 NC(1,nodeControl)=1;
@@ -201,7 +201,7 @@ P=lyap(Ap,eye(20));
 
 
 %% Controlador MRAC
-alpha=.1;
+alpha=.001;
 Gamma=alpha*eye(20);
 
 
