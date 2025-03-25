@@ -122,52 +122,52 @@ clearvars
 
 % clearvars
 % %Estos datos son de todos los metodos
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DatosSeparadosPorMetodo.mat')
-
-Tf=6001;             %El minimo valor de columnas de los metodos
-f=19;                %Fila que quiero mostrar
-t=linspace(0,60,Tf); %Genero un vector de tiempo
-
-%Quito el offset de los datos
-Reales=Reales(:,:)-Reales(:,1);
-FEDNN=FEDNN(:,:)-FEDNN(:,1);
+% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DatosSeparadosPorMetodo.mat')
+% 
+% Tf=6001;             %El minimo valor de columnas de los metodos
+% f=19;                %Fila que quiero mostrar
+% t=linspace(0,60,Tf); %Genero un vector de tiempo
+% 
+% %Quito el offset de los datos
+% Reales=Reales(:,:)-Reales(:,1);
+% FEDNN=FEDNN(:,:)-FEDNN(:,1);
 
 %% Crear la figura principal
-figure
-hold on
-plot(t, DMD1(f,1:Tf), '-b') % Azul
-plot(t, DMD2(f,1:Tf), '-m') % Rojo
-plot(t, FEDNN(f,1:Tf), '-r') % Verde
-plot(t, DNN(f,1:Tf), '-g') % Magenta
-plot(t, Reales(f,1:Tf), '--k') % Línea discontinua negra
-title({'Comparison between the different nodes', 'and the real data'})
-xlabel('Time (s)');
-ylabel('Position of the last node (mm)');
-grid on;
-
-% Create the legend (It's easier to change the name manually)
-legend('Location', 'eastoutside');
-% Definir la región para el zoom 
-x_zoom = [50, 55]; %Tiempo
-y_zoom = [2,6];    %Valor
-
-% Crear un nuevo eje para el zoom
-axes('Position', [0.45 0.6 0.26 0.26]) % [x, y, width, height] ajustar según sea necesario
-box on
-hold on
-
-% Graficar los mismos datos en la nueva región de zoom
-plot(t, DMD1(f,1:Tf), '-b') 
-plot(t, DMD2(f,1:Tf), '-m') 
-plot(t, FEDNN(f,1:Tf), '-r', 'LineWidth', 1.2) 
-plot(t, DNN(f,1:Tf), '-g') 
-plot(t, Reales(f,1:Tf), '--k', 'LineWidth', 2) % Línea discontinua negra
-xlim(x_zoom)
-ylim(y_zoom)
-grid on
-
-% Volver al eje principal (opcional)
-axes(gca)
+% figure
+% hold on
+% plot(t, DMD1(f,1:Tf), '-b') % Azul
+% plot(t, DMD2(f,1:Tf), '-m') % Rojo
+% plot(t, FEDNN(f,1:Tf), '-r') % Verde
+% plot(t, DNN(f,1:Tf), '-g') % Magenta
+% plot(t, Reales(f,1:Tf), '--k') % Línea discontinua negra
+% title({'Comparison between the different nodes', 'and the real data'})
+% xlabel('Time (s)');
+% ylabel('Position of the last node (mm)');
+% grid on;
+% 
+% % Create the legend (It's easier to change the name manually)
+% legend('Location', 'eastoutside');
+% % Definir la región para el zoom 
+% x_zoom = [50, 55]; %Tiempo
+% y_zoom = [2,6];    %Valor
+% 
+% % Crear un nuevo eje para el zoom
+% axes('Position', [0.45 0.6 0.26 0.26]) % [x, y, width, height] ajustar según sea necesario
+% box on
+% hold on
+% 
+% % Graficar los mismos datos en la nueva región de zoom
+% plot(t, DMD1(f,1:Tf), '-b') 
+% plot(t, DMD2(f,1:Tf), '-m') 
+% plot(t, FEDNN(f,1:Tf), '-r', 'LineWidth', 1.2) 
+% plot(t, DNN(f,1:Tf), '-g') 
+% plot(t, Reales(f,1:Tf), '--k', 'LineWidth', 2) % Línea discontinua negra
+% xlim(x_zoom)
+% ylim(y_zoom)
+% grid on
+% 
+% % Volver al eje principal (opcional)
+% axes(gca)
 
 
 %% DMDCaso1
@@ -187,12 +187,12 @@ axes(gca)
 % grid on
 
 %% RealData
-figure
-plot(t, Reales(:, 1:Tf))
-title('Real Measurements')
-ylabel('Positions and Velocities (mm-mm/s)')
-xlabel('Time (s)')
-grid on
+% figure
+% plot(t, Reales(:, 1:Tf))
+% title('Real Measurements')
+% ylabel('Positions and Velocities (mm-mm/s)')
+% xlabel('Time (s)')
+% grid on
 
 %%%%%%%%%%%%%%%%%%%%%%Las leyendas funcionan igual con las figuras DMD CASO
 %%%%%%%%%%%%%%%%%%%%%%1 Y CASO 2 Y REAL DATA, DNN Y FEDNN SON CASO
@@ -251,3 +251,27 @@ grid on
 % annotation('textbox', [legendPosition(1),positionTextY, 0, 0], ...
 %     'String', 'Positions', 'FitBoxToText', 'on', 'EdgeColor', 'none', 'FontWeight', 'bold');
 
+
+
+
+
+%% Control
+
+
+% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/MRACResults.mat')
+% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/SMResults.mat')
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/VOFResults.mat')
+t=out.VOF.time;
+x=out.VOF.signals.values;
+x=squeeze(x);
+
+fila=19;
+
+x=x(fila,:);
+
+figure
+plot(t,x)
+title('MRAC Control')
+ylabel('Position of one node (mm)')
+xlabel('Time(s)')
+grid on
