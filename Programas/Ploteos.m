@@ -258,11 +258,11 @@ clearvars
 %% Control
 
 
-% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/MRACResults.mat')
+load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/MRACResults.mat')
 % load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/SMResults.mat')
-load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/VOFResults.mat')
-t=out.VOF.time;
-x=out.VOF.signals.values;
+% load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/VOFResults.mat')
+t=out.MRAC.time;
+x=out.MRAC.signals.values;
 x=squeeze(x);
 
 fila=19;
