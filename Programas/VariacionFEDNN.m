@@ -3,7 +3,7 @@
 
 
 clc
-clearvars -except Am
+clearvars -except Am grad_Wv grad_Psiv Wv Psiv 
 close all
 
 %% Datos de la simulación
@@ -25,7 +25,7 @@ U_data=U;
 %% Estimación de W_circ y \Phi_circ
 
 % Parámetros de aprendizaje
-alpha = 1e-2;       % Learning rate 
+alpha = 1e-5;       % Learning rate 
 tol_error = 1e-3;   % Criterio de error mínimo (norma cuadrada total)
 
 % Dimensiones de red
@@ -42,7 +42,7 @@ for iter = 1:max_iters
     L_total = 0;
     grad_Wv = zeros(size(Wv));
     grad_Psiv = zeros(size(Psiv));
-    
+%     
     for k = 2:T
         Vk_prev = V_data(:, k-1);
         Vk_real = V_data(:, k);
