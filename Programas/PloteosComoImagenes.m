@@ -43,7 +43,7 @@ ylabel('Node Number');
 % colormap(cmocean('gray'));
 % colormap(parula); % Puede ser cambiado a: 'parula', 'hot',
 % clim([-80 80]);
-colormap("parula");
+colormap("gray");
 clim([-30 30]);
 xline(13.5, '--w', 'Impulse', 'LabelVerticalAlignment','bottom', 'LabelHorizontalAlignment','center');
 % annotation('textbox',[.8 .1 .1 .1],'String','Values beyond ±30 saturated','FitBoxToText','on');
