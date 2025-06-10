@@ -5,7 +5,7 @@ clc
 clearvars -except Kbc ne
 close all
 global V1 W1 K1 K2 P V0 l Lambda A 
-
+tic
 % -----------------------------------------------------
 %% Datos de la simulación
 % ----------------------------------------------------
@@ -94,12 +94,15 @@ for i = 1:N-1
     W1total(:,i)= W1(:,4);
     
 end
-
+toc
 
 %% PLOTEOS
 
 fila_a_comparar = 15; %Es muy dificil ver todo al mismo tiempo así que aquí 
-                     %puedo decidir cual nodo se va a comparar
+                     %puedo decidirelapsed_time = toc;
+
+fprintf('Execution time: %.4f seconds\n', elapsed_time);
+ cual nodo se va a comparar
 
 
 iteraciones = linspace(0,60,6083);
@@ -131,6 +134,10 @@ grid on;
 figure
 plot(iteraciones,W1total);
 title('Evolution of the weights');
+
+elapsed_time = toc;
+
+fprintf('Execution time: %.4f seconds\n', elapsed_time);
 
 % ---------------------------------------------------------------
 %% Definición de las funciones que se usan en este programa 

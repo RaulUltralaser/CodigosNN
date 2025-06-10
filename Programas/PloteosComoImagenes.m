@@ -18,8 +18,8 @@ FEDNN=FEDNN(:,:)-FEDNN(:,1);
 posicionesREALES=Reales(1:20,1:Tf);
 
 % Solo descomentar la que se quiera graficar
-posiciones = Reales(1:20,1:Tf);
-% posiciones = FEDNN(1:20,1:Tf);
+% posiciones = Reales(1:20,1:Tf);
+posiciones = FEDNN(1:20,1:Tf);
 % posiciones = DMD1(1:20,1:Tf);
 % posiciones = DMD2(1:20,1:Tf);
 % posiciones = DNN(1:20,1:10:60001); %Este es especial porque use un tiempo de simulación diferente
@@ -33,19 +33,19 @@ graficar=posicionesREALES-posiciones;
 %                    1, 1, 1]; % Blanco
 
 % Crear la imagen
-figure;
-imagesc(t, 20:1, posiciones); % Usamos imagesc para crear la imagen
-colorbar; % Muestra la barra de colores
-xlabel('Time (s)');
-ylabel('Node Number');
+% figure;
+% imagesc(t, 20:1, posiciones); % Usamos imagesc para crear la imagen
+% colorbar; % Muestra la barra de colores
+% xlabel('Time (s)');
+% ylabel('Node Number');
 % title('DNN');
 % colormap(custom_colormap); % Aplicar la paleta de colores
 % colormap(cmocean('gray'));
 % colormap(parula); % Puede ser cambiado a: 'parula', 'hot',
 % clim([-80 80]);
-colormap("gray");
-clim([-30 30]);
-xline(13.5, '--w', 'Impulse', 'LabelVerticalAlignment','bottom', 'LabelHorizontalAlignment','center');
+% colormap("gray");
+% clim([-30 30]);
+% xline(13.5, '--w', 'Impulse', 'LabelVerreal_dataticalAlignment','bottom', 'LabelHorizontalAlignment','center');
 % annotation('textbox',[.8 .1 .1 .1],'String','Values beyond ±30 saturated','FitBoxToText','on');
 
 
@@ -83,4 +83,33 @@ xline(13.5, '--w', 'Impulse', 'LabelVerticalAlignment','bottom', 'LabelHorizonta
 % ylabel('Error');
 % grid on
 % hold off
+
+
+
+%% Cálculo de los errores 
+
+% Asume que Y_real y Y_pred son matrices 20x6000 (nodos x tiempo)
+Y_real = posicionesREALES;
+Y_pred = posiciones;
+
+% Aplanar para comparar todos los valores como un solo vector
+y_real = Y_real(:);
+y_pred = Y_pred(:);
+
+% 1. Mean Absolute Error (MAE)
+mae = mean(abs(y_real - y_pred));
+
+% 2. Root Mean Square Error (RMSE)
+rmse = sqrt(mean((y_real - y_pred).^2));
+
+% 3. Coefficient of Determination (R²)
+SS_res = sum((y_real - y_pred).^2);
+SS_tot = sum((y_real - mean(y_real)).^2);
+R2 = 1 - (SS_res / SS_tot);
+
+% Mostrar resultados
+fprintf('MAE: %.4f\n', mae);
+fprintf('RMSE: %.4f\n', rmse);
+fprintf('R^2: %.4f\n', R2);
+
 

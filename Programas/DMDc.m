@@ -2,6 +2,7 @@ clc
 close all 
 clearvars -except B
 % Cargar datos desde el archivo .mat
+tic
 load('~/Documentos/Doctorado/Tesis/NeuralNetwork/Datos/DataAcomodada24.mat');  
 
 X = Data;                   %Valores medidos
@@ -71,7 +72,10 @@ xlabel('Frame');
 ylabel('Posiciones y velocidades');
 grid on;
 
+toc 
+elapsed_time = toc;
 
+fprintf('Execution time: %.4f seconds\n', elapsed_time);
 
 %% Caso 2 B es desconocida
 
